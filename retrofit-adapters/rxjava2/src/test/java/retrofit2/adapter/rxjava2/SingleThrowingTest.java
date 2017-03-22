@@ -22,7 +22,6 @@ import io.reactivex.exceptions.CompositeException;
 import io.reactivex.exceptions.Exceptions;
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
-import java.util.concurrent.atomic.AtomicReference;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Before;
@@ -33,6 +32,8 @@ import org.junit.rules.TestRule;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 import static okhttp3.mockwebserver.SocketPolicy.DISCONNECT_AFTER_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -17,9 +17,10 @@ package retrofit2.converter.wire;
 
 import com.squareup.wire.Message;
 import com.squareup.wire.ProtoAdapter;
-import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
+
+import java.io.IOException;
 
 final class WireResponseBodyConverter<T extends Message<T, ?>>
     implements Converter<ResponseBody, T> {

@@ -15,11 +15,6 @@
  */
 package com.example.retrofit;
 
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.annotation.Retention;
-import java.lang.reflect.Type;
-
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import okhttp3.mockwebserver.MockResponse;
@@ -33,6 +28,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import retrofit2.http.GET;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
+import java.lang.reflect.Type;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
