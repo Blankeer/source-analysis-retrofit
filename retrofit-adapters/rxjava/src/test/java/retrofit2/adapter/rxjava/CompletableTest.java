@@ -15,7 +15,6 @@
  */
 package retrofit2.adapter.rxjava;
 
-import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Before;
@@ -25,6 +24,8 @@ import org.junit.rules.TestRule;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import rx.Completable;
+
+import java.io.IOException;
 
 import static okhttp3.mockwebserver.SocketPolicy.DISCONNECT_AFTER_REQUEST;
 

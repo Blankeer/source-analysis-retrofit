@@ -16,8 +16,6 @@
 package retrofit2.adapter.guava;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.Before;
@@ -26,6 +24,9 @@ import org.junit.Test;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.GET;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import static okhttp3.mockwebserver.SocketPolicy.DISCONNECT_AFTER_REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
