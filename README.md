@@ -7,17 +7,42 @@ https://github.com/square/retrofit/releases/tag/parent-2.2.0
     - 发现项目是基于Maven的，于是祭出许久不用的Idea
     - 删掉了部分对源码无用的配置文件，比如website/,CHANGELOG.md等
 2. samples分析
-    - SimpleService,最简单的使用示例
-    - DynamicBaseUrl,动态改变BaseUrl示例
-    - SimpleMockService,Mock数据相关示例
-    - AnnotatedConverters，JsonAndXmlConverters，自定义response ConverterFactory示例
-    - ChunkingConverter，Http分块传输，自定义request ConverterFactory示例
-    - JsonQueryParameters，自定义string ConverterFactory示例
-    - DeserializeErrorBody，http错误时的转换示例
-    - ErrorHandlingAdapter，自定义error回调，自定义CallAdapterFactory示例
-    - RxJavaObserveOnMainThread，Rx自定义相关，自定义CallAdapterFactory
-    - Crawler，一个简单的爬虫，自定义response ConverterFactory
-3. 按调用链看代码
+    ```java
+        public interface GitHub {
+            @GET("/repos/{owner}/{repo}/contributors")
+            Call<List<Contributor>> contributors(
+                    @Path("owner") String owner,
+                    @Path("repo") String repo);
+        }
+        // Create a very simple REST adapter which points the GitHub API.
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        // Create an instance of our GitHub API interface.
+        GitHub github = retrofit.create(GitHub.class);
+        // Create a call instance for looking up Retrofit contributors.
+        Call<List<Contributor>> call = github.contributors("square", "retrofit");
+        call.enqueue(new Callback<List<Contributor>>() {
+            @Override
+            public void onResponse(Call<List<Contributor>> call, Response<List<Contributor>> response) {
+                for (Contributor contributor : response.body()) {
+                    System.out.println(contributor.login + " (" + contributor.contributions + ")");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Contributor>> call, Throwable t) {
+
+            }
+        });
+    ```
+    这是最简单的用法,使用步骤:
+    1. 定义一个 API 的 Interface.包含 API 的基本信息(url,method,path,call,返回类型等)
+    2. 实例化Retrofit对象,配置 baseUrl 和 ConverterFactory
+    3. 通过 retrofit.create 方法创建 API 实例对象
+    4. 直接调用具体的 api 方法得到 Call 对象,调用enqueue方法传入回调
+    
+3. 基本函数调用链
     - Retrofit.Build 建造者模式
     - Retrofit.create() 创建相应Api interface
         - eagerlyValidateMethods 校验解析所有method,即定义的每个api method
@@ -40,7 +65,7 @@ https://github.com/square/retrofit/releases/tag/parent-2.2.0
             - CallAdapter.adapt() Android默认的CallAdapter在ExecutorCallAdapterFactory里，返回的是Call<T>,另外提供的有RxJava2CallAdapter,返回值是Observable
 4. 关键点的代码查看
     1. 为什么只用定义一个interface，达到直接调用的效果
-        利用了Java动态代理机制，相关代码在Retrofit.create();
+        利用了Java动态代理机制,和 AOP 一个原理，相关代码在Retrofit.create();
         ```java
             return (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service},
                             new InvocationHandler() {
@@ -80,4 +105,3 @@ https://github.com/square/retrofit/releases/tag/parent-2.2.0
     - 迭代器模式 ParameterHandler
     - 外观模式 Retrofit
     
-todo...
